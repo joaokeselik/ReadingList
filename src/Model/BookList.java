@@ -11,18 +11,18 @@ public class BookList {
 	 * @param args
 	 */
 	public BookList() {
-		books = new ArrayList<Book>();
+		books = new ArrayList<>();
 	}
 	
 	public void addBook(Book book){
 		books.add(book);
 	}
 	
-	public void removeBook(Book bookToRemove){
+	public void removeBook(String bookToRemove){
 		Iterator<Book> it = books.iterator();
 		while(it.hasNext()) {
 			Book book = it.next();
-		    if(book == bookToRemove){
+		    if(bookToRemove.equals(book.getTitle())){
 		    	it.remove();
 		    }
 		}
@@ -38,12 +38,8 @@ public class BookList {
 	}
 	
 	public Book findBook(Book bookSearched){
-		for(Book book : books){
-			if(bookSearched.getTitle().equals(book.getTitle())){
-				return book;
-			}
-		}
-		return null;
+		String titleSearched = bookSearched.getTitle();
+		return findBookByTitle(titleSearched);
 	}
 	
 	public Book findBookByTitle(String title){
@@ -55,13 +51,24 @@ public class BookList {
 		return null;
 	}
 	
-	public Book findBookByAuthor(Author author){
+	public List<Book> findBooksByAuthor(String author){
+		List<Book> booksByAuthor = new ArrayList<>();
 		for(Book book : books){
-			if(author == book.getAuthor()){
-				return book;
+			if(author.equals(book.getAuthor().getName())){
+				booksByAuthor.add(book);
 			}
 		}
-		return null;
+		if(booksByAuthor.isEmpty())
+			return null;
+		return booksByAuthor;
+	}
+	
+	public String toString(){
+		String listOfBooks = "";
+		for(Book book : books){
+			listOfBooks += book.toString() + "\n";
+		}
+		return listOfBooks;
 	}
 
 }

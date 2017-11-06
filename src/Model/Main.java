@@ -2,18 +2,16 @@ package Model;
 
 public class Main {
 	
-	private User user;
-	private Controller controller;
+	
+	private static TextView textView;
 	/**
 	 * @param args
 	 */
-	public Main(){
-		user = new User();
-		controller = new Controller();
-	}
+	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		textView = new TextView();
+		textView.startUp();
 
 	}
 
