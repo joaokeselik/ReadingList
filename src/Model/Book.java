@@ -14,7 +14,7 @@ public class Book {
 	 */
 	public Book(){
 		title = null;
-		author = null;
+		author = new Author();
 		numberOfPages = 0;
 		isRead = false;
 		// date = todaysdate;
@@ -45,12 +45,7 @@ public class Book {
 	// getters
 	public String getTitle(){
 		return title;
-	}
-	
-	@Override
-	public String toString(){
-		return getTitle();
-	}
+	}	
 	
 	public Author getAuthor(){
 		return author;

@@ -3,13 +3,7 @@ package Model;
 public class Author {
 	
 	private String name;
-	
-	/**
-	 * @param arg
-	 * 
-	 * 
-	 */
-	
+		
 	public Author(){
 				
 	}

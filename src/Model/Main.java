@@ -1,5 +1,7 @@
 package Model;
 
+import View.TextView;
+
 public class Main {
 	
 	
