@@ -3,41 +3,40 @@ package Model;
 public class Book {
 	
 	private String title;
-	private Author author;
+	private String author;
 	private int numberOfPages;
 	private boolean isRead;
 	// private Date addedDate;
-	// private Language language;
+	
 	
 	/**
 	 * @param args
 	 */
 	public Book(){
 		title = null;
-		author = new Author();
+		author = null;
 		numberOfPages = 0;
 		isRead = false;
 		// date = todaysdate;
-		// language = null;
-	}
+		
+	}	
 	
-	// problem here, everything will be null
 	public Book(String title) {
 		this();
 		this.title = title;		
 	}
 	
-	public Book(String title, Author author) {
+	public Book(String title, String author) {
 		this(title);
-		this.author.setName(author.getName());			
+		this.author = author;			
 	}
 	
-	public Book(String title, Author author, int numberOfPages) {
+	public Book(String title, String author, int numberOfPages) {
 		this(title, author);
 		this.numberOfPages = numberOfPages;			
 	}
 	
-	public Book(String title, Author author, int numberOfPages, boolean isRead) {
+	public Book(String title, String author, int numberOfPages, boolean isRead) {
 		this(title, author, numberOfPages);
 		this.isRead = isRead;			
 	}
@@ -47,7 +46,7 @@ public class Book {
 		return title;
 	}	
 	
-	public Author getAuthor(){
+	public String getAuthor(){
 		return author;
 	}
 	
@@ -64,7 +63,7 @@ public class Book {
 		this.title = title;
 	}
 	
-	public void setAuthor(Author author){
+	public void setAuthor(String author){
 		this.author = author;
 	}
 	

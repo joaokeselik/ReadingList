@@ -4,19 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Model.Author;
 import Model.Book;
 import Model.BookList;
-import Model.DBHandler;
 
 public class Controller {
 	
 	private BookList bookList;
 	private DBHandler dbHandler;
+	private String filePath;
 	
 	public Controller(){
 		bookList = new BookList();
 		dbHandler = new DBHandler();
+		filePath = "/afs/kth.se/home/tmp/1016/tmp-sda-1110/workspace/ReadingList/src/Model/booklist.csv";
+		bookList.setAllBooks(dbHandler.importCSVToBookList(filePath));		
 	}
 	
 	public BookList getBookList(){
@@ -27,10 +28,10 @@ public class Controller {
 		this.bookList = bookList;
 	}	
 	
-	public void addBook(String title, String authorName, int numberOfPages, boolean isRead){
-		Author author = new Author(authorName);
+	public void addBook(String title, String author, int numberOfPages, boolean isRead){		
 		Book book = new Book(title, author, numberOfPages, isRead);
 		bookList.getAllBooks().add(book);
+		//dbHandler.exportBookListToCSV(filePath, convertBookListToString(getAllBooks()));
 	}
 	
 	public void removeBook(String bookToRemove){
@@ -84,7 +85,7 @@ public class Controller {
 	public List<Book> findBooksByAuthor(String author){
 		List<Book> booksByAuthor = new ArrayList<>();
 		for(Book book : bookList.getAllBooks()){
-			if(author.equals(book.getAuthor().getName())){
+			if(author.equals(book.getAuthor())){
 				booksByAuthor.add(book);
 			}
 		}
@@ -92,4 +93,17 @@ public class Controller {
 			return null;
 		return booksByAuthor;
 	}	
+	
+	public String convertBookListToString(List<Book> bookListToString){
+		String bookListStr = "";
+	    for(Book book : bookListToString){
+	    	String title = book.getTitle();
+	    	String author = book.getAuthor();
+	    	int numberOfPages = book.getNumberOfPages();
+	    	String isRead = Boolean.toString(book.isRead());
+	    	
+	    	bookListStr += title + " " + author + " " + numberOfPages + " pages " + isRead + "\n";
+	    }
+	    return bookListStr;
+	}
 }

@@ -1,12 +1,9 @@
 package View;
 
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 import Controller.Controller;
-
 
 public class TextView {
 	private Controller controller;
@@ -95,7 +92,7 @@ public class TextView {
 			        break;			    
 			                
 			    default:
-			        System.out.println("GoodBye");
+			        System.out.println("GOODBYE!");
 			        break;
 			}
 		}while(command != Command.QUIT);
@@ -108,31 +105,27 @@ public class TextView {
 		String title = scan.next();		
 				
 		System.out.println("Author: ");
-		String authorName = scan.next();
-		
+		String authorName = scan.next();		
 		
 		System.out.println("Number of pages: ");		
 		int numberOfPages = scan.nextInt();
 				
-		boolean isRead = false;
-		System.out.println("Read (0) or Unread (any number): ");
-		int isReadInt = scan.nextInt();
-		if(isReadInt == 0)
-			isRead = true;		
+		System.out.println("Read(True) or Unread(False): ");
+		boolean isRead = Boolean.parseBoolean(scan.next());			
 		
 		controller.addBook(title, authorName, numberOfPages, isRead);		
 	}
 	
 	private void listAllBooks(){
-		System.out.println(listToString(controller.getAllBooks()));
+		System.out.println(controller.convertBookListToString(controller.getAllBooks()));
 	}
 	
 	private void listReadBooks(){
-		System.out.println(listToString(controller.getReadBooks()));
+		System.out.println(controller.convertBookListToString(controller.getReadBooks()));
 	}
 	
 	private void listUnreadBooks(){
-		System.out.println(listToString(controller.getUnreadBooks()));
+		System.out.println(controller.convertBookListToString(controller.getUnreadBooks()));
 	}
 	
 	private void removeBook(Scanner scan){
@@ -142,7 +135,7 @@ public class TextView {
 	}
 	
 	private void help(){
-		System.out.println("Choose an option: ");
+		System.out.println("Choose an option:");
 		System.out.println("a - Add book ");
 		System.out.println("l - List all books ");
 		System.out.println("r - List read books ");
@@ -155,12 +148,5 @@ public class TextView {
 		System.out.println("Enter a command: ");		
 	}
 	
-	private String listToString(List<?> list) {
-	    String listToString = "";
-	    for (int i = 0; i < list.size(); i++) {
-	    	listToString += list.get(i) + "\n";
-	    }
-	    return listToString;
-	}
-
+	
 }
