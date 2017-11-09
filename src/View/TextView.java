@@ -1,9 +1,11 @@
 package View;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import Controller.Controller;
+import Model.Book;
 
 public class TextView {
 	private Controller controller;
@@ -117,15 +119,15 @@ public class TextView {
 	}
 	
 	private void listAllBooks(){
-		System.out.println(controller.convertBookListToString(controller.getAllBooks()));
+		System.out.println(convertBookListToString(controller.getAllBooks()));
 	}
 	
 	private void listReadBooks(){
-		System.out.println(controller.convertBookListToString(controller.getReadBooks()));
+		System.out.println(convertBookListToString(controller.getReadBooks()));
 	}
 	
 	private void listUnreadBooks(){
-		System.out.println(controller.convertBookListToString(controller.getUnreadBooks()));
+		System.out.println(convertBookListToString(controller.getUnreadBooks()));
 	}
 	
 	private void removeBook(Scanner scan){
@@ -147,6 +149,56 @@ public class TextView {
 		System.out.println("q - Quit ");		 
 		System.out.println("Enter a command: ");		
 	}
+	
+	
+	
+	
+	public String convertBookListToString(List<Book> bookListToString){
+		String bookListStr = "";
+		System.out.println(String.format("%-40s %-20s %-7s %5s","Title", "Author", "Pages", "Read"));
+		System.out.println("---------------------------------------------------------------------------");
+	    for(Book book : bookListToString){
+	    	String title = book.getTitle();
+	    	String author = book.getAuthor();
+	    	int numberOfPages = book.getNumberOfPages();
+	    	String isRead = Boolean.toString(book.isRead());	    	
+	    	
+	    	bookListStr += String.format("%-40s %-20s %-7s %5s\n", title, author, numberOfPages, isRead);
+	    }
+	    return bookListStr;
+	}
+	
+	
+	//old version of this method
+	/*public String convertBookListToString(List<Book> bookListToString){
+	String bookListStr = "";
+    for(Book book : bookListToString){
+    	String title = book.getTitle();
+    	String author = book.getAuthor();
+    	int numberOfPages = book.getNumberOfPages();
+    	String isRead = Boolean.toString(book.isRead());
+    	
+    	bookListStr += title + " " + author + " " + numberOfPages + " pages " + isRead + "\n";
+    }
+    return bookListStr;
+	}*/
+			
+	// uses reflection to access the fields of object Book
+	/*public String convertBookListToString(List<?> bookListToString) throws IllegalArgumentException, IllegalAccessException{
+		String bookListStr = "";
+		String bookStr = "";
+	    for(Object bookObject : bookListToString){
+	    	Field[] fields = bookObject.getClass().getDeclaredFields();
+	    	for (Field field : fields) {
+	    		  field.setAccessible(true); 
+	    		  Object fieldString = field.get(bookObject);	    		  
+	    		  bookStr += fieldString + " ";	    	    	
+	    	}
+	    	bookListStr += bookStr + "\n";
+	    	bookStr = "";
+	    }
+	    return bookListStr;
+	}*/
 	
 	
 }

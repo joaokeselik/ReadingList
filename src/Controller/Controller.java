@@ -92,18 +92,6 @@ public class Controller {
 		if(booksByAuthor.isEmpty())
 			return null;
 		return booksByAuthor;
-	}	
+	}		
 	
-	public String convertBookListToString(List<Book> bookListToString){
-		String bookListStr = "";
-	    for(Book book : bookListToString){
-	    	String title = book.getTitle();
-	    	String author = book.getAuthor();
-	    	int numberOfPages = book.getNumberOfPages();
-	    	String isRead = Boolean.toString(book.isRead());
-	    	
-	    	bookListStr += title + " " + author + " " + numberOfPages + " pages " + isRead + "\n";
-	    }
-	    return bookListStr;
-	}
 }
