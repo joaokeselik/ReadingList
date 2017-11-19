@@ -32,20 +32,6 @@ public class Controller {
 		bookList.getAllBooks().add(book);
 
 	}
-
-	public void saveBooklist(){
-		dbHandler.exportBookListToJson(filepath, bookList.getAllBooks());
-	}
-	
-	public void removeBook(String bookToRemove){
-		Iterator<Book> it = bookList.getAllBooks().iterator();
-		while(it.hasNext()) {
-			Book book = it.next();
-		    if(bookToRemove.equals(book.getTitle())){
-		    	it.remove();
-		    }
-		}
-	}
 	
 	public List<Book> getAllBooks(){		
 		return bookList.getAllBooks();
@@ -71,7 +57,7 @@ public class Controller {
 		return unreadBooks;
 	}
 	
-	public List<Book> findBooksByTitle(String title){
+	public List<Book> searchBooksByTitle(String title){
 		List<Book> booksByTitle = new ArrayList<>();
 		for(Book book : bookList.getAllBooks()){
 			if(title.equals(book.getTitle())){
@@ -83,7 +69,7 @@ public class Controller {
 		return booksByTitle;
 	}
 	
-	public List<Book> findBooksByAuthor(String author){
+	public List<Book> searchBooksByAuthor(String author){
 		List<Book> booksByAuthor = new ArrayList<>();
 		for(Book book : bookList.getAllBooks()){
 			if(author.equals(book.getAuthor())){
@@ -93,6 +79,20 @@ public class Controller {
 		if(booksByAuthor.isEmpty())
 			return null;
 		return booksByAuthor;
+	}
+
+	public void removeBook(String bookToRemove){
+		Iterator<Book> it = bookList.getAllBooks().iterator();
+		while(it.hasNext()) {
+			Book book = it.next();
+			if(bookToRemove.equals(book.getTitle())){
+				it.remove();
+			}
+		}
+	}
+
+	public void saveBookList(){
+		dbHandler.exportBookListToJson(filepath, bookList.getAllBooks());
 	}
 	
 }

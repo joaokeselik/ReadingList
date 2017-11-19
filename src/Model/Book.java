@@ -7,6 +7,7 @@ public class Book {
 	private int numberOfPages;
 	private boolean isRead;
 	// private Date addedDate;
+	// private Language language;
 
 
 	public Book(){
@@ -65,11 +66,8 @@ public class Book {
 		this.numberOfPages = numberOfPages;
 	}
 	
-	public void setIsRead(){
-		if(isRead == false)
-			isRead = true;
-		else
-			isRead = false;
+	public void setIsRead(boolean isRead){
+		this.isRead = isRead;
 	}
 	
 

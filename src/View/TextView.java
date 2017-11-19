@@ -19,11 +19,9 @@ public class TextView {
 	}
 	
 	public void startUp(){
-		
 		help();
 		fillCommands();
 		readCommand();
-		
 	}	
 	
 	private void fillCommands(){
@@ -137,14 +135,14 @@ public class TextView {
 	private void searchByTitle(Scanner scan){
 		System.out.println("Title: ");
 		String bookToSearchByTitle = scan.next();
-		System.out.println(convertBookListToString(controller.findBooksByTitle(bookToSearchByTitle)));
+		System.out.println(convertBookListToString(controller.searchBooksByTitle(bookToSearchByTitle)));
 		scan.nextLine();
 	}
 
 	private void searchByAuthor(Scanner scan){
 		System.out.println("Author: ");
 		String bookToSearchByAuthor = scan.next();
-		System.out.println(convertBookListToString(controller.findBooksByAuthor(bookToSearchByAuthor)));
+		System.out.println(convertBookListToString(controller.searchBooksByAuthor(bookToSearchByAuthor)));
 		scan.nextLine();
 	}
 	
@@ -171,7 +169,7 @@ public class TextView {
 	}
 
 	private void save(){
-		controller.saveBooklist();
+		controller.saveBookList();
 	}
 	
 	public String convertBookListToString(List<Book> bookListToString){
