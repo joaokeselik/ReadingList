@@ -12,7 +12,6 @@ public class TextView {
 	private Command command;
 	private HashMap<String, Command> commands;
 	
-	
 	public TextView(){
 		controller = new Controller();
 		command = null;
@@ -35,61 +34,65 @@ public class TextView {
 		commands.put("t", Command.SEARCHBYTITLE);
 		commands.put("s", Command.SEARCHBYAUTHOR);
 		commands.put("x", Command.REMOVEBOOK);
+		commands.put("w", Command.SAVE);
 		commands.put("h", Command.HELP);	
 		commands.put("q", Command.QUIT);		
 	}
-	
 	
 	private void readCommand(){
 		Scanner reader = new Scanner(System.in);
 		
 		do{
-			
 			do{
-				String commandLetter = reader.next();
+				String commandLetter = reader.nextLine();
 				command = commands.get(commandLetter);
 				if(command == null)
-					System.out.println("Write a valid command");			
+					System.out.println("Enter a valid command");
 			}while(command == null);
 			
 			switch(command){
 				case ADDBOOK:
-			        System.out.println("ADD: ");
+			        System.out.println("ADDBOOK:");
 			        addBook(reader);
 			        break;
 			            
 			    case LISTALLBOOKS:
-			        System.out.println("ALLBOOKS: ");
+			        System.out.println("ALLBOOKS:");
 			        listAllBooks();
 			        break;
 			                 
 			    case LISTREADBOOKS: 
-			        System.out.println("READBOOKS: ");
+			        System.out.println("READBOOKS:");
 			        listReadBooks();
 			        break;
 			        
 			    case LISTUNREADBOOKS: 
-			        System.out.println("UNREADBOOKS: ");
+			        System.out.println("UNREADBOOKS:");
 			        listUnreadBooks();
 			        break;
 			        
 			    case SEARCHBYTITLE: 
-			        System.out.println("SEARCHBYTITLE: ");
-			        //searchByTitle();
+			        System.out.println("SEARCHBYTITLE:");
+			        searchByTitle(reader);
 			        break;
 			        
 			    case SEARCHBYAUTHOR: 
-			        System.out.println("SEARCHBYAUTHOR: ");
-			        //searchByAuthor();
+			        System.out.println("SEARCHBYAUTHOR:");
+			        searchByAuthor(reader);
 			        break;
 			        
-			    case REMOVEBOOK: 
-			        System.out.println("REMOVE: ");
+			    case REMOVEBOOK:
+			        System.out.println("REMOVE:");
 			        removeBook(reader);
 			        break;
+
+				case SAVE:
+					System.out.println("SAVED!");
+					save();
+					break;
 			    
 			    case HELP: 
-			        System.out.println("HELP: ");
+			        System.out.println("HELP:");
 			        help();
 			        break;			    
 			                
@@ -104,18 +107,19 @@ public class TextView {
 	
 	private void addBook(Scanner scan){	
 		System.out.println("Title: ");
-		String title = scan.next();		
+		String title = scan.nextLine();
 				
 		System.out.println("Author: ");
-		String authorName = scan.next();		
+		String authorName = scan.next();
 		
 		System.out.println("Number of pages: ");		
 		int numberOfPages = scan.nextInt();
 				
 		System.out.println("Read(True) or Unread(False): ");
-		boolean isRead = Boolean.parseBoolean(scan.next());			
+		boolean isRead = Boolean.parseBoolean(scan.next());
 		
-		controller.addBook(title, authorName, numberOfPages, isRead);		
+		controller.addBook(title, authorName, numberOfPages, isRead);
+		scan.nextLine();
 	}
 	
 	private void listAllBooks(){
@@ -125,33 +129,50 @@ public class TextView {
 	private void listReadBooks(){
 		System.out.println(convertBookListToString(controller.getReadBooks()));
 	}
-	
+
 	private void listUnreadBooks(){
 		System.out.println(convertBookListToString(controller.getUnreadBooks()));
+	}
+
+	private void searchByTitle(Scanner scan){
+		System.out.println("Title: ");
+		String bookToSearchByTitle = scan.next();
+		System.out.println(convertBookListToString(controller.findBooksByTitle(bookToSearchByTitle)));
+		scan.nextLine();
+	}
+
+	private void searchByAuthor(Scanner scan){
+		System.out.println("Author: ");
+		String bookToSearchByAuthor = scan.next();
+		System.out.println(convertBookListToString(controller.findBooksByAuthor(bookToSearchByAuthor)));
+		scan.nextLine();
 	}
 	
 	private void removeBook(Scanner scan){
 		System.out.println("Book to remove: ");
 		String bookToRemove = scan.next();	
 		controller.removeBook(bookToRemove);
+		scan.nextLine();
 	}
 	
 	private void help(){
 		System.out.println("Choose an option:");
-		System.out.println("a - Add book ");
-		System.out.println("l - List all books ");
-		System.out.println("r - List read books ");
-		System.out.println("u - List unread books ");
-		System.out.println("t - Search book by title ");
-		System.out.println("s - Search book by author ");
-		System.out.println("x - Remove book ");	
-		System.out.println("h - Help ");	
-		System.out.println("q - Quit ");		 
-		System.out.println("Enter a command: ");		
+		System.out.println("a - Add book");
+		System.out.println("l - List all books");
+		System.out.println("r - List read books");
+		System.out.println("u - List unread books");
+		System.out.println("t - Search book by title");
+		System.out.println("s - Search book by author");
+		System.out.println("x - Remove book");
+		System.out.println("w - Save");
+		System.out.println("h - Help");
+		System.out.println("q - Quit");
+		System.out.println("Enter a command:");
 	}
-	
-	
-	
+
+	private void save(){
+		controller.saveBooklist();
+	}
 	
 	public String convertBookListToString(List<Book> bookListToString){
 		String bookListStr = "";
@@ -167,38 +188,4 @@ public class TextView {
 	    }
 	    return bookListStr;
 	}
-	
-	
-	//old version of this method
-	/*public String convertBookListToString(List<Book> bookListToString){
-	String bookListStr = "";
-    for(Book book : bookListToString){
-    	String title = book.getTitle();
-    	String author = book.getAuthor();
-    	int numberOfPages = book.getNumberOfPages();
-    	String isRead = Boolean.toString(book.isRead());
-    	
-    	bookListStr += title + " " + author + " " + numberOfPages + " pages " + isRead + "\n";
-    }
-    return bookListStr;
-	}*/
-			
-	// uses reflection to access the fields of object Book
-	/*public String convertBookListToString(List<?> bookListToString) throws IllegalArgumentException, IllegalAccessException{
-		String bookListStr = "";
-		String bookStr = "";
-	    for(Object bookObject : bookListToString){
-	    	Field[] fields = bookObject.getClass().getDeclaredFields();
-	    	for (Field field : fields) {
-	    		  field.setAccessible(true); 
-	    		  Object fieldString = field.get(bookObject);	    		  
-	    		  bookStr += fieldString + " ";	    	    	
-	    	}
-	    	bookListStr += bookStr + "\n";
-	    	bookStr = "";
-	    }
-	    return bookListStr;
-	}*/
-	
-	
 }

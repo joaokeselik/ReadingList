@@ -7,18 +7,14 @@ public class Book {
 	private int numberOfPages;
 	private boolean isRead;
 	// private Date addedDate;
-	
-	
-	/**
-	 * @param args
-	 */
+
+
 	public Book(){
 		title = null;
 		author = null;
 		numberOfPages = 0;
 		isRead = false;
 		// date = todaysdate;
-		
 	}	
 	
 	public Book(String title) {
@@ -41,7 +37,6 @@ public class Book {
 		this.isRead = isRead;			
 	}
 	
-	// getters
 	public String getTitle(){
 		return title;
 	}	
@@ -57,8 +52,7 @@ public class Book {
 	public boolean isRead(){
 		return isRead;
 	}
-	
-	// setters
+
 	public void setTitle(String title){
 		this.title = title;
 	}

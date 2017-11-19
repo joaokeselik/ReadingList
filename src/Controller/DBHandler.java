@@ -1,29 +1,51 @@
 package Controller;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
 import Model.Book;
+import com.google.gson.Gson;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
 
 
 public class DBHandler {
         
-    private String splitStr;    
+    //private String splitStr;
     
     public DBHandler(){
-    	splitStr = ",";
-    	
-    }     
+    	// splitStr = ",";
+    }
+
+	public void exportBookListToJson(String filepath, List<Book> bookListToJson){
+
+		String json = new Gson().toJson(bookListToJson);
+
+		try (FileWriter file = new FileWriter(filepath)){
+			file.write(json);
+			file.flush();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	public List<Book> importJsonToBookList(String filepath){
+		Gson gson = new Gson();
+		BufferedReader br = null;
+
+		try {
+			br = new BufferedReader(new FileReader(filepath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		Type listType = new TypeToken<ArrayList<Book>>(){}.getType();
+		List<Book> bookList = gson.fromJson(br, listType);
+		return bookList;
+	}
     
-    public List<Book> importCSVToBookList(String filePath){
+   /* public List<Book> importCSVToBookList(String filePath){
         List<Book> bookList = new ArrayList<Book>();
         
 		try(Scanner scan = new Scanner(new File(filePath))){
@@ -44,7 +66,7 @@ public class DBHandler {
     
     // writing everything in the same column, have to parse title-author-pages-isread
     //have to pass a list instead of a string as a parameter and parse the list in the method body
-    public void exportBookListToCSV(String filePath, String bookListToCSV){
+    public void exportBookListToCSV(String filePath, List<Book> bookListToCSV){
     	String input = bookListToCSV;
         //input = input.substring(1, input.length() - 1); // get rid of brackets
         String[] split = input.split(" ");
@@ -61,8 +83,7 @@ public class DBHandler {
 			e.printStackTrace();
 		}       
         
-    }
-    
+    }*/
 }
 	
 	

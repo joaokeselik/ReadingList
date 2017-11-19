@@ -3,7 +3,6 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import Model.Book;
 import Model.BookList;
 
@@ -11,13 +10,13 @@ public class Controller {
 	
 	private BookList bookList;
 	private DBHandler dbHandler;
-	private String filePath;
+	private String filepath;
 	
 	public Controller(){
 		bookList = new BookList();
 		dbHandler = new DBHandler();
-		filePath = "/afs/kth.se/home/tmp/1016/tmp-sda-1110/workspace/ReadingList/src/Model/booklist.csv";
-		bookList.setAllBooks(dbHandler.importCSVToBookList(filePath));		
+		filepath = "C:\\Users\\Joao\\ReadingList\\src\\Model\\booklist.json";
+		bookList.setAllBooks(dbHandler.importJsonToBookList(filepath));
 	}
 	
 	public BookList getBookList(){
@@ -31,7 +30,11 @@ public class Controller {
 	public void addBook(String title, String author, int numberOfPages, boolean isRead){		
 		Book book = new Book(title, author, numberOfPages, isRead);
 		bookList.getAllBooks().add(book);
-		//dbHandler.exportBookListToCSV(filePath, convertBookListToString(getAllBooks()));
+
+	}
+
+	public void saveBooklist(){
+		dbHandler.exportBookListToJson(filepath, bookList.getAllBooks());
 	}
 	
 	public void removeBook(String bookToRemove){
@@ -68,18 +71,16 @@ public class Controller {
 		return unreadBooks;
 	}
 	
-	public Book findBook(Book bookSearched){
-		String titleSearched = bookSearched.getTitle();
-		return findBookByTitle(titleSearched);
-	}
-	
-	public Book findBookByTitle(String title){
+	public List<Book> findBooksByTitle(String title){
+		List<Book> booksByTitle = new ArrayList<>();
 		for(Book book : bookList.getAllBooks()){
 			if(title.equals(book.getTitle())){
-				return book;
+				booksByTitle.add(book);
 			}
 		}
-		return null;
+		if(booksByTitle.isEmpty())
+			return null;
+		return booksByTitle;
 	}
 	
 	public List<Book> findBooksByAuthor(String author){
@@ -92,6 +93,6 @@ public class Controller {
 		if(booksByAuthor.isEmpty())
 			return null;
 		return booksByAuthor;
-	}		
+	}
 	
 }
