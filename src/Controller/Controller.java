@@ -10,13 +10,13 @@ public class Controller {
 	
 	private BookList bookList;
 	private DBHandler dbHandler;
-	private String filepath;
+	private String filename;
 	
 	public Controller(){
 		bookList = new BookList();
 		dbHandler = new DBHandler();
-		filepath = "C:\\Users\\Joao\\ReadingList\\src\\Model\\booklist.json";
-		bookList.setAllBooks(dbHandler.importJsonToBookList(filepath));
+		filename = "booklist.json";
+		bookList.setAllBooks(dbHandler.importJsonToBookList(filename));
 	}
 	
 	public BookList getBookList(){
@@ -92,7 +92,7 @@ public class Controller {
 	}
 
 	public void saveBookList(){
-		dbHandler.exportBookListToJson(filepath, bookList.getAllBooks());
+		dbHandler.exportBookListToJson(filename, bookList.getAllBooks());
 	}
 	
 }

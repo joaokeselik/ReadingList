@@ -6,16 +6,12 @@ public class Book {
 	private String author;
 	private int numberOfPages;
 	private boolean isRead;
-	// private Date addedDate;
-	// private Language language;
-
 
 	public Book(){
 		title = null;
 		author = null;
 		numberOfPages = 0;
 		isRead = false;
-		// date = todaysdate;
 	}	
 	
 	public Book(String title) {

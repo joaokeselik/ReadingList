@@ -88,7 +88,7 @@ public class TextView {
 					System.out.println("SAVED!");
 					save();
 					break;
-			    
+
 			    case HELP: 
 			        System.out.println("HELP:");
 			        help();
@@ -172,7 +172,7 @@ public class TextView {
 		controller.saveBookList();
 	}
 	
-	public String convertBookListToString(List<Book> bookListToString){
+	private String convertBookListToString(List<Book> bookListToString){
 		String bookListStr = "";
 		System.out.println(String.format("%-40s %-20s %-7s %5s","Title", "Author", "Pages", "Read"));
 		System.out.println("---------------------------------------------------------------------------");
